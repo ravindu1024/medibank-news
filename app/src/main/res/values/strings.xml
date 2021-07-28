@@ -1,0 +1,18 @@
+<resources>
+    <string name="news_api_key">46dbdf5864c548d48ccafa4156960e89</string>
+    <string name="base_url">https://newsapi.org</string>
+    <string name="app_name">Medibank News</string>
+
+    <string name="headline_author">%1$s (Source: %2$s)</string>
+
+<!--    Menu Items-->
+    <string name="menu_title_save">Save Article</string>
+    <string name="menu_title_unsave">Delete Article</string>
+    <string name="menu_item_headlines">Headlines</string>
+    <string name="menu_item_sources">Sources</string>
+    <string name="menu_item_saved">Saved</string>
+
+<!--    Snackbar messages-->
+    <string name="msg_article_saved">Article Saved</string>
+    <string name="msg_article_deleted">Article Deleted</string>
+</resources>

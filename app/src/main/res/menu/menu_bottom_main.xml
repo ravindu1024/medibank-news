@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mainFragment"
+        android:icon="@drawable/outline_feed_24"
+        android:title="@string/menu_item_headlines" />
+    <item
+        android:id="@+id/sourcesFragment"
+        android:icon="@drawable/outline_source_24"
+        android:title="@string/menu_item_sources" />
+    <item
+        android:id="@+id/savedItemsFragment"
+        android:icon="@drawable/outline_bookmarks_24"
+        android:title="@string/menu_item_saved" />
+</menu>

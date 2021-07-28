@@ -1,0 +1,3 @@
+rootProject.name = "Medibank News"
+include ':app'
+include ':data'
