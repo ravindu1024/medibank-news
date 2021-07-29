@@ -1,5 +1,7 @@
 package com.medibank.news.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.webkit.WebChromeClient
@@ -11,7 +13,6 @@ import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.medibank.data.models.domain.NewsHeadline
 import com.medibank.news.R
-import com.medibank.news.common.MainActivity
 import com.medibank.news.common.createViewModel
 import com.medibank.news.common.factories
 import com.medibank.news.databinding.FragmentDetailBinding
@@ -52,7 +53,11 @@ class NewsDetailFragment : Fragment() {
             }
         }
 
-        binding.webview.loadUrl(headline!!.url)
+        // Some news sources include their URL with http but gets redirected to https. However, Android 10 and above
+        // blocks http links by default so I'm just replacing http links with https instead of doing
+        // "allow cleartext" as a blanket fix.
+        val secureUrl = headline!!.url.replace("http://", "https://")
+        binding.webview.loadUrl(secureUrl)
 
         return binding.root
     }
@@ -84,8 +89,17 @@ class NewsDetailFragment : Fragment() {
                     Snackbar.make(binding.webview, getString(R.string.msg_article_saved), Snackbar.LENGTH_SHORT).show()
                 }
             }
+            R.id.menu_open_browser -> {
+                openInBrowser(headline!!.url)
+            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun openInBrowser(url: String){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
     }
 }

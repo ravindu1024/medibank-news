@@ -6,4 +6,9 @@
         android:title="@string/menu_title_save"
         android:id="@+id/menu_save"
         app:showAsAction="never"/>
+
+    <item
+        android:title="@string/menu_open_browser"
+        android:id="@+id/menu_open_browser"
+        app:showAsAction="never"/>
 </menu>
