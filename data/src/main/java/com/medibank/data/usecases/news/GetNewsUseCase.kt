@@ -2,11 +2,11 @@ package com.medibank.data.usecases.news
 
 import android.util.Log
 import com.medibank.data.api.NewsApi
-import com.medibank.data.usecases.AppPreferences
 import com.medibank.data.models.domain.NewsHeadline
 import com.medibank.data.models.dto.NewsResponseDto
 import com.medibank.data.models.dto.toDomain
 import com.medibank.data.toCsv
+import com.medibank.data.usecases.AppPreferences
 import io.reactivex.Observable
 import io.reactivex.functions.Function
 import java.util.*

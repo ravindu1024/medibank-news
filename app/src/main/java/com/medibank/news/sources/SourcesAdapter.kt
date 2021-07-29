@@ -7,24 +7,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.medibank.data.models.domain.NewsSource
 import com.medibank.news.databinding.RowNewsSourceBinding
 
-class SourcesAdapter(context: Context) : RecyclerView.Adapter<SourcesRowHolder>(){
+class SourcesAdapter(context: Context) : RecyclerView.Adapter<SourcesRowHolder>() {
 
     private val inflater = LayoutInflater.from(context)
     private val sourcesList = mutableListOf<NewsSource>()
     private lateinit var rowClickCallback: (String) -> Unit
     private lateinit var savedSourcesCallback: () -> List<String>
 
-    fun setSources(list: List<NewsSource>){
+    fun setSources(list: List<NewsSource>) {
         sourcesList.clear()
         sourcesList.addAll(list)
         notifyDataSetChanged()
     }
 
-    fun setRowCallback(callback: (String) -> Unit){
+    fun setRowCallback(callback: (String) -> Unit) {
         this.rowClickCallback = callback
     }
 
-    fun setSavedSourcesCallback(callback: () -> List<String>){
+    fun setSavedSourcesCallback(callback: () -> List<String>) {
         this.savedSourcesCallback = callback
     }
 

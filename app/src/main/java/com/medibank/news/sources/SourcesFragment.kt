@@ -9,10 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.medibank.news.common.ViewState
 import com.medibank.news.common.createViewModel
-import com.medibank.news.databinding.FragmentSourcesBinding
 import com.medibank.news.common.factories
+import com.medibank.news.databinding.FragmentSourcesBinding
 
-class SourcesFragment : Fragment(){
+/**
+ * Shows a list of availablesources for the user to select. Users can select multiple sources and the selections
+ * will be persisted across app launches
+ */
+class SourcesFragment : Fragment() {
 
     private lateinit var binding: FragmentSourcesBinding
     private lateinit var viewModel: SourcesViewModel
@@ -37,7 +41,7 @@ class SourcesFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun setupUi(){
+    private fun setupUi() {
         binding.sourcesList.layoutManager = LinearLayoutManager(requireContext())
         binding.sourcesList.adapter = adapter
 
@@ -46,7 +50,7 @@ class SourcesFragment : Fragment(){
         }
     }
 
-    private fun bindLiveData(){
+    private fun bindLiveData() {
         adapter.setRowCallback { sourceId ->
             viewModel.saveSource(sourceId)
         }
@@ -60,7 +64,7 @@ class SourcesFragment : Fragment(){
         })
 
         viewModel.viewState.observe(requireActivity(), { state ->
-            when(state){
+            when (state) {
                 ViewState.ShowLoading -> binding.swipeLayout.isRefreshing = true
 
                 ViewState.DismissLoading -> binding.swipeLayout.isRefreshing = false
@@ -73,7 +77,7 @@ class SourcesFragment : Fragment(){
         })
     }
 
-    private fun loadSources(){
+    private fun loadSources() {
         viewModel.getAllSources()
     }
 }

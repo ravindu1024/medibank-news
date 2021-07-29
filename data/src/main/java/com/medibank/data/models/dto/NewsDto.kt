@@ -22,7 +22,7 @@ data class NewsHeadlineSourceDto(
     val name: String
 )
 
-fun NewsResponseDto.toDomain(): List<NewsHeadline>{
+fun NewsResponseDto.toDomain(): List<NewsHeadline> {
     return this.articles.map {
         return@map NewsHeadline(
             author = it.author ?: "",

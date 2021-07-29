@@ -10,8 +10,8 @@ import retrofit2.http.Query
 interface NewsApi {
 
     @GET("/v2/top-headlines/sources")
-    fun getSources(@Query("language") language: String): Single<NewsSourceResponseDto>
+    fun getSources(@Query("language") language: String, @Query("apiKey") key: String = ""): Single<NewsSourceResponseDto>
 
     @GET("/v2/top-headlines")
-    fun getTopHeadlines(@Query("sources") sources: String): Observable<NewsResponseDto>
+    fun getTopHeadlines(@Query("sources") sources: String, @Query("apiKey") key: String = ""): Observable<NewsResponseDto>
 }

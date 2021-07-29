@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.medibank.data.models.domain.NewsHeadline
 import com.medibank.news.databinding.RowNewsHeadlineBinding
 
-class NewsHeadlineAdapter(context: Context) : RecyclerView.Adapter<HeadlineRowHolder>(){
+class NewsHeadlineAdapter(context: Context) : RecyclerView.Adapter<HeadlineRowHolder>() {
     private val inflater = LayoutInflater.from(context)
     private val newsList = mutableListOf<NewsHeadline>()
     private lateinit var callback: (NewsHeadline) -> Unit
 
-    fun setCallback(callback: (NewsHeadline) -> Unit){
+    fun setCallback(callback: (NewsHeadline) -> Unit) {
         this.callback = callback
     }
 
-    fun setHeadlines(headlines: List<NewsHeadline>){
+    fun setHeadlines(headlines: List<NewsHeadline>) {
         newsList.clear()
         newsList.addAll(headlines)
         notifyDataSetChanged()

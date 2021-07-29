@@ -10,16 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.medibank.data.models.domain.NewsHeadline
-import com.medibank.news.common.MainActivity
 import com.medibank.news.R
+import com.medibank.news.common.MainActivity
 import com.medibank.news.common.createViewModel
-import com.medibank.news.databinding.FragmentDetailBinding
 import com.medibank.news.common.factories
+import com.medibank.news.databinding.FragmentDetailBinding
 
+/**
+ * A simple webview wrapper that displays the content of a given headline. Allows the user to save or unsave
+ * the current article.
+ */
+class NewsDetailFragment : Fragment() {
 
-class NewsDetailFragment : Fragment(){
-
-    companion object{
+    companion object {
         const val ARG_HEADLINE = "ARG_HEADLINE"
     }
 
@@ -36,17 +39,15 @@ class NewsDetailFragment : Fragment(){
         viewModel = createViewModel { NewsDetailViewModel(factories().savedItemsUseCase) }
         setHasOptionsMenu(true)
 
-        enableToolbarBackButton(true)
-
         headline = arguments?.getParcelable(ARG_HEADLINE) as? NewsHeadline
-        if(headline == null){
+        if (headline == null) {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).popBackStack()
         }
 
         binding.webview.webChromeClient = WebChromeClient()
-        binding.webview.webViewClient = object: WebViewClient(){
+        binding.webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                //This is to stop the webview from being annoying and throwing us into the default browser
+                // This is to stop the webview from being annoying and throwing us into the default browser
                 return false
             }
         }
@@ -54,13 +55,6 @@ class NewsDetailFragment : Fragment(){
         binding.webview.loadUrl(headline!!.url)
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        //Disable this because we don't want the back button on the homepage
-        enableToolbarBackButton(false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -71,19 +65,21 @@ class NewsDetailFragment : Fragment(){
     override fun onPrepareOptionsMenu(menu: Menu) {
 
         val isSaved = viewModel.isItemSaved(headline!!)
-        menu.getItem(0).title = if(isSaved) getString(R.string.menu_title_unsave) else getString(R.string.menu_title_save)
+        menu.getItem(0).title =
+            if (isSaved) getString(R.string.menu_title_unsave) else getString(R.string.menu_title_save)
 
         super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.menu_save -> {
                 val isSaved = viewModel.isItemSaved(headline!!)
-                if(isSaved) {
+                if (isSaved) {
                     viewModel.removeSavedHeadline(headline!!)
-                    Snackbar.make(binding.webview, getString(R.string.msg_article_deleted), Snackbar.LENGTH_SHORT).show()
-                }else {
+                    Snackbar.make(binding.webview, getString(R.string.msg_article_deleted), Snackbar.LENGTH_SHORT)
+                        .show()
+                } else {
                     viewModel.addSavedHeadline(headline!!)
                     Snackbar.make(binding.webview, getString(R.string.msg_article_saved), Snackbar.LENGTH_SHORT).show()
                 }
@@ -91,12 +87,5 @@ class NewsDetailFragment : Fragment(){
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun enableToolbarBackButton(enabled: Boolean){
-        (requireActivity() as MainActivity).supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(enabled)
-            it.setDisplayShowHomeEnabled(enabled)
-        }
     }
 }

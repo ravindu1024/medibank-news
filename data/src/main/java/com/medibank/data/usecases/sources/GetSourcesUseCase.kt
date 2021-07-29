@@ -2,15 +2,15 @@ package com.medibank.data.usecases.sources
 
 import android.util.Log
 import com.medibank.data.api.NewsApi
-import com.medibank.data.usecases.AppPreferences
 import com.medibank.data.models.domain.NewsSource
 import com.medibank.data.models.dto.toDomain
 import com.medibank.data.toCsv
+import com.medibank.data.usecases.AppPreferences
 import io.reactivex.Single
 
-class GetSourcesUseCase(private val api: NewsApi, private val prefs: AppPreferences){
+class GetSourcesUseCase(private val api: NewsApi, private val prefs: AppPreferences) {
 
-    fun getAllSources(): Single<List<NewsSource>>{
+    fun getAllSources(): Single<List<NewsSource>> {
 
         val saved = prefs.getSavedSources()
         Log.d("NEWS", "Saved sources: ${saved.toCsv()}")
@@ -23,17 +23,17 @@ class GetSourcesUseCase(private val api: NewsApi, private val prefs: AppPreferen
             }
     }
 
-    fun getSavedSources(): List<String>{
+    fun getSavedSources(): List<String> {
         return prefs.getSavedSources()
     }
 
-    fun addOrRemoveSource(source: String): Boolean{
+    fun addOrRemoveSource(source: String): Boolean {
         val saved = prefs.getSavedSources()
 
-        return if(saved.contains(source)) {
+        return if (saved.contains(source)) {
             prefs.removeSource(source)
             false
-        }else {
+        } else {
             prefs.addSavedSource(source)
             true
         }

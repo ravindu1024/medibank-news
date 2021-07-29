@@ -11,12 +11,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.medibank.news.R
 import com.medibank.news.common.ViewState
 import com.medibank.news.common.createViewModel
-import com.medibank.news.databinding.FragmentSavedItemsBinding
 import com.medibank.news.common.factories
+import com.medibank.news.databinding.FragmentSavedItemsBinding
 import com.medibank.news.detail.NewsDetailFragment
 import com.medibank.news.headlines.NewsHeadlineAdapter
 
-class SavedItemsFragment : Fragment(){
+/**
+ * Shows a list of saved headlines
+ */
+class SavedItemsFragment : Fragment() {
 
     private lateinit var binding: FragmentSavedItemsBinding
     private lateinit var viewModel: SavedItemsViewModel
@@ -41,7 +44,7 @@ class SavedItemsFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun setupUi(){
+    fun setupUi() {
         binding.savedItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.savedItemList.adapter = adapter
 
@@ -50,11 +53,12 @@ class SavedItemsFragment : Fragment(){
         }
     }
 
-    private fun bindData(){
+    private fun bindData() {
         adapter.setCallback { headline ->
             val b = Bundle()
             b.putParcelable(NewsDetailFragment.ARG_HEADLINE, headline)
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.action_savedItemsFragment_to_newsDetailFragment, b)
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.action_savedItemsFragment_to_newsDetailFragment, b)
         }
 
         viewModel.savedHeadlines.observe(requireActivity(), { headlines ->
@@ -62,7 +66,7 @@ class SavedItemsFragment : Fragment(){
         })
 
         viewModel.viewState.observe(requireActivity(), { state ->
-            when(state){
+            when (state) {
                 ViewState.DismissLoading -> binding.swipeLayout.isRefreshing = false
 
                 ViewState.DismissLoading -> binding.swipeLayout.isRefreshing = false
@@ -75,7 +79,7 @@ class SavedItemsFragment : Fragment(){
         })
     }
 
-    private fun loadData(){
+    private fun loadData() {
         viewModel.loadSavedHeadlines()
     }
 }

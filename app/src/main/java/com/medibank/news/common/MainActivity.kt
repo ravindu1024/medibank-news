@@ -10,6 +10,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.medibank.news.R
 import com.medibank.news.databinding.ActivityMainBinding
 
+/**
+ * The main Activity that hosts all the fragments in the app and handles
+ * fragment navigation
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -19,18 +23,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bottomNav.setupWithNavController(navHostFragment.navController)
 
-        navHostFragment.navController.addOnDestinationChangedListener{ _, dest, _ ->
-            when(dest.id){
+        navHostFragment.navController.addOnDestinationChangedListener { _, dest, _ ->
+            when (dest.id) {
                 R.id.mainFragment, R.id.sourcesFragment, R.id.savedItemsFragment -> {
                     binding.bottomNav.visibility = View.VISIBLE
+                    enableToolbarBackButton(false)
                 }
                 else -> {
                     binding.bottomNav.visibility = View.GONE
+                    enableToolbarBackButton(true)
                 }
             }
+        }
+    }
+
+    private fun enableToolbarBackButton(enabled: Boolean) {
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(enabled)
+            it.setDisplayShowHomeEnabled(enabled)
         }
     }
 

@@ -16,7 +16,7 @@ data class NewsSourceDto(
 )
 
 
-fun NewsSourceResponseDto.toDomain(): List<NewsSource>{
+fun NewsSourceResponseDto.toDomain(): List<NewsSource> {
     return this.sources.map {
         NewsSource(
             id = it.id,
